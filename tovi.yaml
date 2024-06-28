@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: job
+spec:
+  location: /Users/naivoder/Code/ProximalPolicyOptimization/
+  name: PPO
+  project: none
+
+  params:
+    - env: ["ALE/Asteroids-v5"]
+
+  entrypoint: "python {{path}}/main.py --env {{env.value}}"
+
+  gpu: 1
+  ram: 32G
+  cpu: 2
+
+  image: registry.gitlab.com/r-dex-systems/containers/pytorch:rl
