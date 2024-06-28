@@ -8,16 +8,14 @@ class PPOAgent:
         self,
         env_name,
         input_dims,
-        n_actions,
-        max_action,
+        action_space,
         gamma=0.99,
         alpha=3e-4,
         gae_lambda=0.95,
         policy_clip=0.2,
         batch_size=64,
         n_epochs=10,
-        max_grad_norm=0.5,
-        entropy_coefficient=1e-2,
+        entropy_coefficient=1e-3,
     ):
         self.env_name = env_name.split("/")[-1]
         self.gamma = gamma
@@ -25,16 +23,19 @@ class PPOAgent:
         self.n_epochs = n_epochs
         self.gae_lambda = gae_lambda
         self.entropy_coefficient = entropy_coefficient
-        self.max_grad_norm = max_grad_norm
-        self.max_action = torch.tensor(max_action)
+        self.n_actions = action_space.shape[0]
         self.actor = Actor(
-            input_dims, n_actions, alpha, chkpt_dir=f"weights/{self.env_name}_actor.pt"
+            input_dims,
+            self.n_actions,
+            action_space.low,
+            action_space.high,
+            alpha,
+            chkpt_dir=f"weights/{self.env_name}_actor.pt",
         )
         self.critic = Critic(
             input_dims, alpha, chkpt_dir=f"weights/{self.env_name}_critic.pt"
         )
         self.memory = ReplayBuffer(batch_size)
-        self.max_action.to(self.actor.device)
 
     def remember(self, state, state_, action, probs, reward, done):
         self.memory.store_transition(state, state_, action, probs, reward, done)
@@ -48,12 +49,11 @@ class PPOAgent:
         self.critic.load_checkpoint()
 
     def choose_action(self, state):
-        with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.actor.device).unsqueeze(0)
-            dist = self.actor(state)
-            action = dist.sample() * self.max_action
-            probs = dist.log_prob(action)
-        return action.cpu().flatten().numpy(), probs.cpu().flatten().numpy()
+        self.actor.eval()
+        state = torch.FloatTensor(state).to(self.actor.device).unsqueeze(0)
+        action, probs = self.actor.sample_normal(state)
+        self.actor.train()
+        return action.cpu().detach().numpy()[0], probs.cpu().detach().numpy()[0]
 
     def calc_adv_and_returns(self, memories):
         states, new_states, rewards, dones = memories
@@ -70,7 +70,7 @@ class PPOAgent:
             adv = adv[:-1]
             adv = torch.tensor(adv).float().unsqueeze(1).to(self.critic.device)
             returns = adv + values
-            adv = (adv - adv.mean()) / (adv.std() + 1e-8)
+            adv = (adv - adv.mean()) / (adv.std() + 1e-4)
         return adv, returns
 
     def learn(self):
@@ -95,8 +95,11 @@ class PPOAgent:
                 old_probs = old_prob_arr[batch]
                 actions = action_arr[batch]
 
-                dist = self.actor(states)
+                mu, log_std = self.actor(states)
+                std = log_std.exp()
+                dist = torch.distributions.Normal(mu, std)
                 new_probs = dist.log_prob(actions)
+
                 prob_ratio = torch.exp(
                     new_probs.sum(-1, keepdim=True) - old_probs.sum(-1, keepdim=True)
                 )
@@ -113,9 +116,6 @@ class PPOAgent:
 
                 self.actor.optimizer.zero_grad()
                 actor_loss.backward()
-                torch.nn.utils.clip_grad_norm_(
-                    self.actor.parameters(), self.max_grad_norm
-                )
                 self.actor.optimizer.step()
 
                 critic_value = self.critic(states)
@@ -123,9 +123,6 @@ class PPOAgent:
 
                 self.critic.optimizer.zero_grad()
                 critic_loss.backward()
-                torch.nn.utils.clip_grad_norm_(
-                    self.critic.parameters(), self.max_grad_norm
-                )
                 self.critic.optimizer.step()
 
         self.memory.clear_memory()
