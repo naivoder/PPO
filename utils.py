@@ -13,6 +13,19 @@ def linear_scale(epoch, start_value=0.6, min_value=0.1, num_epochs=2000):
     return start_value + std
 
 
+def action_adapter(a, max_a):
+    return 2 * (a - 0.5) * max_a
+
+
+def clip_reward(x):
+    if x < -1:
+        return -1
+    elif x > 1:
+        return 1
+    else:
+        return x
+
+
 def preprocess_frame(state):
     grayscale = cv2.cvtColor(state, cv2.COLOR_BGR2GRAY)
     resized = cv2.resize(grayscale, (84, 84), interpolation=cv2.INTER_AREA)
