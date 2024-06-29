@@ -52,7 +52,7 @@ def run_ppo(env_name, n_games, n_epochs, horizon, batch_size, continue_training=
     # continue training from saved checkpoint
     if continue_training:
         if os.path.exists(f"weights/{save_prefix}_actor.pt"):
-            agent.load_checkpoints()
+            agent.load_models()
 
     n_steps, n_learn, best_score = 0, 0, float("-inf")
     history, metrics = [], []
@@ -112,7 +112,7 @@ def save_results(env_name, history, metrics, agent):
 
 
 def save_best_version(env_name, agent, seeds=100):
-    agent.load_checkpoints()
+    agent.load_models()
 
     best_total_reward = float("-inf")
     best_frames = None
