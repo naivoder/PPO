@@ -43,7 +43,7 @@ def run_ppo(env_name, n_games, n_epochs, horizon, batch_size, continue_training=
     agent = PPOAgent(
         env_name,
         env.observation_space.shape,
-        env.action_space,
+        env.action_space.shape[0],
         alpha=3e-4,
         n_epochs=n_epochs,
         batch_size=batch_size,
@@ -56,6 +56,7 @@ def run_ppo(env_name, n_games, n_epochs, horizon, batch_size, continue_training=
 
     n_steps, n_learn, best_score = 0, 0, float("-inf")
     history, metrics = [], []
+    max_action = env.action_space.high[0]
 
     for i in range(n_games):
         state, _ = env.reset()
@@ -64,9 +65,10 @@ def run_ppo(env_name, n_games, n_epochs, horizon, batch_size, continue_training=
         term, trunc, score = False, False, 0
         while not term and not trunc:
             action, prob = agent.choose_action(state)
-
-            next_state, reward, term, trunc, _ = env.step(action)
+            act = utils.action_adapter(action, max_action)
+            next_state, reward, term, trunc, _ = env.step(act)
             next_state = np.array(next_state, dtype=np.float32).flatten()
+            reward = utils.clip_reward(reward)
 
             agent.remember(state, next_state, action, prob, reward, term or trunc)
 
@@ -83,7 +85,7 @@ def run_ppo(env_name, n_games, n_epochs, horizon, batch_size, continue_training=
 
         if avg_score > best_score:
             best_score = avg_score
-            agent.save_checkpoints()
+            agent.save_models()
 
         metrics.append(
             {
@@ -129,6 +131,7 @@ def save_best_version(env_name, agent, seeds=100):
             action, _ = agent.choose_action(state)
             next_state, reward, term, trunc, _ = env.step(action)
             next_state = np.array(next_state, dtype=np.float32).flatten()
+            reward = utils.clip_reward(reward)
             total_reward += reward
             state = next_state
 
