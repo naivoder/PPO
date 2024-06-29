@@ -124,12 +124,14 @@ def save_best_version(env_name, agent, seeds=100):
 
         frames = []
         total_reward = 0
+        max_action = env.action_space.high[0]
 
         term, trunc = False, False
         while not term and not trunc:
             frames.append(env.render())
             action, _ = agent.choose_action(state)
-            next_state, reward, term, trunc, _ = env.step(action)
+            act = utils.action_adapter(action, max_action)
+            next_state, reward, term, trunc, _ = env.step(act)
             next_state = np.array(next_state, dtype=np.float32).flatten()
             reward = utils.clip_reward(reward)
             total_reward += reward

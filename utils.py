@@ -13,6 +13,7 @@ def linear_scale(epoch, start_value=0.6, min_value=0.1, num_epochs=2000):
     return start_value + std
 
 
+# reminder to give credit to OP of this one
 def action_adapter(a, max_a):
     return 2 * (a - 0.5) * max_a
 
