@@ -153,7 +153,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-n",
         "--n_games",
-        default=10000,
+        default=50000,
         type=int,
         help="Number of episodes (games) to run during training",
     )
