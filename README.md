@@ -22,34 +22,43 @@ You can run the algorithm on any supported Gymnasium environment. For example:
 python main.py --env 'LunarLanderContinuous-v2'
 ```
 
-<!-- <table>
+Notes: Reward scaling appears to work really well for some environments (BipedalWalker) but it might be limiting the upper bound of performance on some other environments. I've increased the number of episodes to 50k for the Mujoco environments, if that gives the agent enough time to learn I'll rerun on the Gymnasium ones. Examples in the paper train for *millions* of timesteps...
+
+<table>
     <tr>
         <td>
-            <p><b>CartPole-v1</b></p>
-            <img src="environments/CartPole-v1.gif" width="250" height="250"/>
+            <p><b>Pendulum-v1</b></p>
+            <img src="environments/Pendulum-v1.gif" width="250" height="250"/>
         </td>
         <td>
-            <p><b>MountainCar-v0</b></p>
-            <img src="environments/MountainCar-v0.gif" width="250" height="250"/>
+            <p><b>MountainCarContinuous-v0</b></p>
+            <img src="environments/MountainCarContinuous-v0.gif" width="250" height="250"/>
         </td>
         <td>
-            <p><b>Acrobot-v1</b></p>
-            <img src="environments/Acrobot-v1.gif" width="250" height="250"/>
+            <p><b>LunarLanderContinuous-v2</b></p>
+            <img src="environments/LunarLanderContinuous-v2.gif" width="250" height="250"/>
+        </td>
+        <td>
+            <p><b>BipedalWalker-v3</b></p>
+            <img src="environments/BipedalWalker-v3.gif" width="250" height="250"/>
         </td>
     </tr>
     <tr>
         <td>
-            <img src="metrics/CartPole-v1_running_avg.png" width="250" height="250"/>
+            <img src="metrics/Pendulum-v1_running_avg.png" width="250" height="250"/>
         </td>
         <td>
-            <img src="metrics/MountainCar-v0_running_avg.png" width="250" height="250"/>
+            <img src="metrics/MountainCarContinuous-v0_running_avg.png" width="250" height="250"/>
         </td>
         <td>
-            <img src="metrics/Acrobot-v1_running_avg.png" width="250" height="250"/>
+            <img src="metrics/LunarLanderContinuous-v2_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/BipedalWalker-v3_running_avg.png" width="250" height="250"/>
         </td>
     </tr>
 </table>
-<table>
+<!-- <table>
     <tr>
         <td>
             <p><b>LundarLander-v2</b></p>
