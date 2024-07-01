@@ -64,6 +64,10 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
             <p><b>Pusher-v4</b></p>
             <img src="environments/Pusher-v4.gif" width="250" height="250"/>
         </td>
+        <td>
+            <p><b>Reacher-v4</b></p>
+            <img src="environments/Reacher-v4.gif" width="250" height="250"/>
+        </td>
        <!--  <td>
             <p><b>Asteroids-v5</b></p>
             <img src="environments/Asteroids-v5.gif" width="250" height="250"/>
@@ -76,6 +80,9 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
     <tr>
         <td>
             <img src="metrics/Pusher-v4_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/Reacher-v4_running_avg.png" width="250" height="250"/>
         </td>
         <!-- <td>
             <img src="metrics/Asteroids-v5_running_avg.png" width="250" height="250"/>
