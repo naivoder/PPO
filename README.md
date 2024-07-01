@@ -58,13 +58,13 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
         </td>
     </tr>
 </table>
-<!-- <table>
+<table>
     <tr>
         <td>
-            <p><b>LundarLander-v2</b></p>
-            <img src="environments/LundarLander-v2.gif" width="250" height="250"/>
+            <p><b>Pusher-v4</b></p>
+            <img src="environments/Pusher-v4.gif" width="250" height="250"/>
         </td>
-        <td>
+       <!--  <td>
             <p><b>Asteroids-v5</b></p>
             <img src="environments/Asteroids-v5.gif" width="250" height="250"/>
         </td>
@@ -72,20 +72,20 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
             <p><b>Breakout-v5</b></p>
             <img src="environments/Breakout-v5.gif" width="250" height="250"/>
         </td>
-    </tr>
+    </tr> -->
     <tr>
         <td>
-            <img src="metrics/LundarLander-v2_running_avg.png" width="250" height="250"/>
+            <img src="metrics/Pusher-v4_running_avg.png" width="250" height="250"/>
         </td>
-        <td>
+        <!-- <td>
             <img src="metrics/Asteroids-v5_running_avg.png" width="250" height="250"/>
         </td>
         <td>
             <img src="metrics/Breakout-v5_running_avg.png" width="250" height="250"/>
-        </td>
+        </td> -->
     </tr>
 </table>
-<table>
+<!-- <table>
     <tr>
         <td>
             <p><b>BeamRider-v5</b></p>
