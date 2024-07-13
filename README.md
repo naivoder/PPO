@@ -105,7 +105,33 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
         </td>
     </tr>
 </table>
-
+<table>
+    <tr>
+        <td>
+            <p><b>Ant-v4</b></p>
+            <img src="environments/Ant-v4.gif" width="250" height="250"/>
+        </td>
+        <td>
+            <p><b>HalfCheetah-v4</b></p>
+            <img src="environments/HalfCheetah-v4.gif" width="250" height="250"/>
+        </td>
+        <td>
+            <p><b>Swimmer-v3</b></p>
+            <img src="environments/Swimmer-v3.gif" width="250" height="250"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="metrics/Ant-v4_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/HalfCheetah-v4_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/Swimmer-v3_running_avg.png" width="250" height="250"/>
+        </td>
+    </tr>
+</table>
 
 ## Acknowledgements
 

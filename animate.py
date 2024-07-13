@@ -1,13 +1,13 @@
 import gymnasium as gym
 import torch
-from agent import SACAgent
+from agent import PPOAgent
 from argparse import ArgumentParser
 from utils import save_animation
 
 def generate_animation(env_name):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     env = gym.make(env_name, render_mode="rgb_array")
-    agent = SACAgent(env_name,
+    agent = PPOAgent(env_name,
         env.observation_space.shape,
         env.action_space,
         tau=5e-3,
