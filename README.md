@@ -84,10 +84,24 @@ Notes: Reward scaling appears to work really well for some environments (Bipedal
             <p><b>BipedalWalker-v3</b></p>
             <img src="environments/BipedalWalker-v3.gif" width="250" height="250"/>
         </td>
+        <td>
+            <p><b>InvertedDoublePendulum-v4</b></p>
+            <img src="environments/InvertedDoublePendulum-v4.gif" width="250" height="250"/>
+        </td>
+        <td>
+            <p><b>Walker2d-v4</b></p>
+            <img src="environments/Walker2d-v4.gif" width="250" height="250"/>
+        </td>
     </tr>
     <tr>
         <td>
             <img src="metrics/BipedalWalker-v3_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/InvertedDoublePendulum-v4_running_avg.png" width="250" height="250"/>
+        </td>
+        <td>
+            <img src="metrics/Walker2d-v4_running_avg.png" width="250" height="250"/>
         </td>
     </tr>
 </table>
